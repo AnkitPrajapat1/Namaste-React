@@ -9,8 +9,11 @@ import Error from "./componenets/Error.jsx";
 import Body from "./componenets/Body.jsx";
 import RestaurantsMenu from "./componenets/Restaurantsmenu.jsx";
 // import{ router }from './App.jsx'
+// import Grosery from "./componenets/Grocery.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { lazy, Suspense } from "react";
+const Grocery = lazy(() => import("./componenets/Grocery.jsx"));
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -29,6 +32,15 @@ export const router = createBrowserRouter([
       {
         path: "/contact-us",
         element: <ContactUs />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/grocery",
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Grocery />
+          </Suspense>
+        ),
         errorElement: <Error />,
       },
       {

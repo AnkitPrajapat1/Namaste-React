@@ -3,10 +3,10 @@ import RestaurantCard from "./RestaurantCard.jsx";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer.jsx";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus.js";
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
-  
 
   // setCount(count + 1)
   const topRated = resList.filter((res) => res.rating > 4.2);
@@ -26,6 +26,12 @@ const Body = () => {
         ?.restaurants;
     setRestaurants(result);
   };
+
+  const OnlineStatus = useOnlineStatus();
+  if (OnlineStatus === false)
+    return (
+      <h1>Look's like you are offline. Check your internet connection!</h1>
+    );
 
   if (restaurants.length === 0) {
     return <Shimmer />;
@@ -82,7 +88,13 @@ const Body = () => {
       ) : (
         <div className="res-container">
           {restaurants.map((restaurent) => (
-           <Link to={`/restaurants/${restaurent.info.id}`} key={restaurent.info.id}> <RestaurantCard  resList={restaurent} /></Link>
+            <Link
+              to={`/restaurants/${restaurent.info.id}`}
+              key={restaurent.info.id}
+            >
+              {" "}
+              <RestaurantCard resList={restaurent} />
+            </Link>
           ))}
         </div>
       )}
