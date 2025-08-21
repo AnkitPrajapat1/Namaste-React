@@ -1,4 +1,4 @@
-import resList from "../utils/mockData.js";
+// import resList from "../utils/mockData.js";
 import RestaurantCard from "./RestaurantCard.jsx";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer.jsx";
@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus.js";
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
+  const [resList, setRestList] = useState([]);
   const [searchText, setSearchText] = useState("");
 
   // setCount(count + 1)
-  const topRated = resList.filter((res) => res.rating > 4.2);
   //api not working
   useEffect(() => {
     fetchData();
@@ -24,6 +24,8 @@ const Body = () => {
     const result =
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
+    setRestList(result);
+
     setRestaurants(result);
   };
 
@@ -38,10 +40,10 @@ const Body = () => {
   }
   return (
     <div className="body">
-      <div className="filter">
-        <div className="search">
+      <div className="flex w-[60%] justify-between m-auto">
+        <div className="flex  ">
           <input
-            className="search-input"
+            className="bg-gray-300 p-1 m-1 rounded-md"
             type="text"
             placeholder="search"
             value={searchText}
@@ -52,12 +54,12 @@ const Body = () => {
           />
 
           <button
-            className="search-btn"
+            className="bg-orange-400 hover:bg-orange-300 p-1 m-1 rounded-md"
             onClick={() => {
               setRestaurants(resList);
-              // console.log(searchText);
-              const filteredRes = resList.filter((res) => {
-                return res.name
+              console.log(searchText);
+              const filteredRes = restaurants.filter((res) => {
+                return res.info.name
                   .toLowerCase()
                   .includes(searchText.toLowerCase());
               });
@@ -70,8 +72,13 @@ const Body = () => {
         </div>
         <button
           onClick={() => {
+            const topRated = restaurants.filter(
+              (res) => res?.info?.avgRating > 4.2
+            );
+
             setRestaurants(topRated);
           }}
+          className="bg-zinc-500 p-2 m-1 rounded-md hover:text-white hover:bg-zinc-400 hover:cursor-pointer"
         >
           Top Rated Restaurants
         </button>
@@ -79,14 +86,16 @@ const Body = () => {
           onClick={() => {
             setRestaurants(resList);
           }}
+          className="bg-zinc-500 p-2 m-1 rounded-md hover:text-white hover:bg-zinc-400 hover:cursor-pointer"
         >
           All Restaurants
         </button>
       </div>
+
       {restaurants.length === 0 ? (
         <Shimmer />
       ) : (
-        <div className="res-container">
+        <div className="w-[90%] mt-4 flex flex-wrap gap-5 m-auto">
           {restaurants.map((restaurent) => (
             <Link
               to={`/restaurants/${restaurent.info.id}`}

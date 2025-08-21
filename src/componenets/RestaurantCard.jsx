@@ -4,17 +4,17 @@ const RestaurantCard = (props) => {
   // console.log(props)
   const { name, avgRating,costForTwo, cuisines, cloudinaryImageId } = props.resList?.info;
   const {deliveryTime} = props.resList.info.sla;
-  const cuisinesList = cuisines.join(", ")
-
+  const cuisinesList = cuisines.join(", ").substring(0,33)
+  
   
   return (
-    <div className="card-container">
-      <img src={IMG_URL+cloudinaryImageId} alt="" />
-      <h3>{name}</h3>
+    <div className="w-[250px] h-[300px] hover:border-1 rounded-md p-1 m-auto hover:scale-95 transform transition-transform hover:ease-in-out">
+      <img className="h-[60%] w-full rounded-md" src={IMG_URL+cloudinaryImageId} alt="" />
+      <h3 className="font-bold ">{name.length>30?cuisinesList.substring(0,30)+"...":name}</h3>
       <p>{avgRating} rating</p>
       <p>{costForTwo}</p>
       <p>{deliveryTime} min</p>
-      <p>{cuisinesList}</p>
+      <p className="font-light">{cuisinesList.length>30?cuisinesList.substring(0,33)+"...":cuisinesList}</p>
     </div>
   );
   // console.log(props)

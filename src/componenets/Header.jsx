@@ -4,20 +4,20 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState("Login");
   return (
-    <div className="header">
-      <img src={LOGO_URL} alt="" />
-      <ul className="nav-items">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About us</Link></li>
-        <li><Link to="/contact-us">Contact us</Link></li>
-        <li><Link to="/grocery">Grocery Store</Link></li>
-        <li>Cart</li>
+    <div className="w-full h-15 p-4 mr-4  bg-gray-500 flex justify-between items-center">
+      <img src={LOGO_URL} alt="logo" className="w-14 " />
+      <ul className=" flex gap-3  items-center">
+        <li className="hover:cursor-pointer hover:text-white"><Link to="/">Home</Link></li>
+        <li className="hover:cursor-pointer hover:text-white"><Link to="/about">About us</Link></li>
+        <li className="hover:cursor-pointer hover:text-white"><Link to="/contact-us">Contact us</Link></li>
+        <li className="hover:cursor-pointer hover:text-white"><Link to="/grocery">Grocery Store</Link></li>
+        <li className="hover:cursor-pointer hover:text-white">Cart</li>
 
         <button
           onClick={() => {
             setIsLoggedIn(isLoggedIn === "Login" ? "LogOut" : "Login");
           }}
-          className="login-btn"
+          className="w-16 h-8 hover:bg-white hover:cursor-pointer text-black rounded-md"
         >
           {isLoggedIn}
         </button>
